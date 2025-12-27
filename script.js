@@ -1,16 +1,12 @@
 const cityInput = document.getElementById("cityInput");
 const getWeatherBtn = document.getElementById("getWeatherBtn");
 const weatherResult = document.getElementById("weatherResult");
-
 const apiKey = "a2cb4c8d815e4623898f3f8c2136d9d3";
-
 const sun = document.querySelector(".sun");
 const cloud = document.querySelector(".cloud");
 const rain = document.querySelector(".rain");
-
 getWeatherBtn.addEventListener("click", () => {
     const city = cityInput.value.trim();
-
     if (city === "") {
         weatherResult.innerHTML = "<p>Please enter a city name!</p>";
         sun.classList.add("hidden");
@@ -18,26 +14,18 @@ getWeatherBtn.addEventListener("click", () => {
         rain.classList.add("hidden");
         return;
     }
-
     fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`)
         .then(res => res.json())
         .then(data => {
-
             if (data.cod != 200) {
                 weatherResult.innerHTML = "<p>City not found!</p>";
                 return;
             }
-
             const temp = data.main.temp;
             const feelsLike = data.main.feels_like;
             const humidity = data.main.humidity;
             const desc = data.weather[0].description.toLowerCase();
             const name = data.name;
-
-           
-            // Icon logic
-            // Icon logic (IMPROVED)
-
             if (desc.includes("clear")) {
                 sun.textContent = "☀️";
                 sun.classList.remove("hidden");
@@ -53,11 +41,7 @@ getWeatherBtn.addEventListener("click", () => {
             else {
                 cloud.textContent = "☁️";
                 cloud.classList.remove("hidden");
-}
-
-  
-
-            // Background (normal climate colors)
+             }
             const body = document.body;
             const card = document.querySelector(".weather-container");
 
@@ -71,13 +55,10 @@ getWeatherBtn.addEventListener("click", () => {
                 body.style.background = "linear-gradient(to bottom, #cfd9df, #e2ebf0)";
                 card.style.background = "rgba(255,255,255,0.35)";
             }
-
-            // Temperature color
             const tempColor =
                 temp > 30 ? "#ff4b5c" :
                 temp > 20 ? "#ff9800" :
                 "#1e90ff";
-
             weatherResult.innerHTML = `
                 <h2>${name}</h2>
                 <p class="temp" style="color:${tempColor}">${temp}°</p>
@@ -93,6 +74,7 @@ getWeatherBtn.addEventListener("click", () => {
             rain.classList.add("hidden");
         });
 });
+
 
 
 
